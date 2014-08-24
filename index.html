@@ -63,17 +63,18 @@
 
     <div class="clearfix"></div>
 
+    <!-- TODO: Grand Total, pie-chart, etc. -->
+
     <ol class="summary" >
       <li ng-repeat="bin in summary">
-        <span class="bucket-label" >{{ bin.label }}</span>
-        <span class="bucket-count" >{{ bin.count }}</span>
-        <span class="bucket-total" >{{ bin.sum }}</span>
+        <span class="bucket-label" >{{ bin.label }}:</span>
+        <span class="bucket-count" >({{ bin.count }} items,</span>
+        <span class="bucket-total" >{{ bin.sum }} total)</span>
         <ul class="sample">
           <li ng-repeat="it in bin.blurb" >{{ it }}</li>
         </ul>
       </li>
     </ol>
-
 
   </div>
 

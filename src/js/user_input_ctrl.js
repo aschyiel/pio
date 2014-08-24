@@ -157,7 +157,7 @@ function summarize( ctrl, items ) {
           it && bucket.blurb.push( as_blurb( it, name_property, value_property ) );
         }
         bucket.count = sorted_items.length;
-        bucket.label = sortby;
+        bucket.label = capitalize( sortby );
 
         // TODO: Standard Deviation, Median, Max, Min, etc.
         bucket.sum = _.chain( sorted_items )
@@ -200,6 +200,14 @@ function reverse_sort( li, sortby ) {
 */
 function as_blurb( it, name_property, value_property ) {
   return it[ name_property ] +' | '+ it[ value_property ];
+}
+
+/**
+* Poor man's string capitalization.
+*/
+function capitalize( s ) {
+  // GOTCHA: Assumes it's all-one-word.
+  return s[0].toUpperCase() + s.substring(1).toLowerCase();
 }
 
 
