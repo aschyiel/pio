@@ -22,17 +22,18 @@ body {
 /** By default, the text-area representing the user-input is "collapsed". */
 #input {
   float: right;
-  width: 80%;
+  width: 275px;
   height: 35px;
 }
 #input.expanded {
-  height: 500px;
+  width: 60%;
+  height: 325px;
 }
 #sort, #input {
   float: left;
 }
 #sort {
-  margin-left: 10px;
+  margin-left: 32px;
 }
 #flash {
   display: block;
@@ -51,16 +52,21 @@ body {
 .summary {
   margin-top: 24px;
   list-style: none;
+  padding: 0;
 }
 .bucket-title {
-  font-size: 18px;
+  font-size: 21px;
+  font-family: sans-serif;
+}
+.bucket-sample {
+  margin-top: 12px;
 }
 .blurb {
   list-style-type: disc;
 }
 .bucket {
   display: inline-block;
-  width: 32%;
+  width: 390px;
   height: 155px;
   float: left;
 }

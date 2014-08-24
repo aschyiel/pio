@@ -66,7 +66,7 @@
     <ol class="summary" >
       <li class="bucket" ng-repeat="bin in summary">
         <span class="bucket-title">{{ bin.label }}: {{ bin.count }} item<ng-pluralize count="bin.count" when="{'1': '', '0': 's', 'other': 's'}"></ng-pluralize>, {{ bin.sum }} total</span>
-        <ul class="sample">
+        <ul class="bucket-sample">
           <li class="blurb" ng-repeat="it in bin.blurb" >{{ it }}</li>
         </ul>
       </li>
