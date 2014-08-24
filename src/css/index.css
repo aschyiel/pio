@@ -58,4 +58,10 @@ body {
 .blurb {
   list-style-type: disc;
 }
+.bucket {
+  display: inline-block;
+  width: 32%;
+  height: 155px;
+  float: left;
+}
 
