@@ -1,5 +1,8 @@
 //..src/js/default_data.js, uly, aug2014..
 
+/*jshint jquery:true, undef:true */
+/*global window */
+
 /**
 * Provides the default (json) test data.
 */
@@ -1468,6 +1471,25 @@ ns.data.valid_large = JSON.stringify([
         "type": "pipeline"
       }
     ]);
+
+/**
+* Quick testing mechanism without cluttering up the UX;
+* Programmatically sets the user-input/textarea.
+*
+* Defaults to the large test-data with 100+ items.
+*
+* @public
+* @param {String} name Optional, the test-data property name under
+*                      our namespace's data;
+*                      ie. invalid|valid_small|valid|large
+* @return void
+*/
+ns.use_test_data = function( name ) {
+  var s = ns.data[ name ];
+  s = s || ns.data.valid_large;
+  $( '#input' ).text( s );
+};
+
 
 //---
 })( window.aschyiel );
