@@ -15,8 +15,8 @@ window.aschyiel = window.aschyiel || {};
 function main() {
   var mod = 'AschyielAngularSorter';
   var app = ns.app = angular.module( mod, [ 'ui.bootstrap' ] );
-  app.controller( 'UserInputCtrl', [ '$scope', function( $scope ) {
-        new ns.UserInputCtrl({ '$scope': $scope, 'app': app });
+  app.controller( 'AngularSorterCtrl', [ '$scope', function( $scope ) {
+        new ns.AngularSorterCtrl({ '$scope': $scope, 'app': app });
       }]);
   angular.bootstrap( document, [ mod ] );
 

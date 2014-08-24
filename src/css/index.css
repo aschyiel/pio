@@ -28,10 +28,10 @@ body {
 #input.expanded {
   height: 500px;
 }
-#sort_button, #input {
+#sort, #input {
   float: left;
 }
-#sort_button {
+#sort {
   margin-left: 10px;
 }
 #flash {
@@ -44,7 +44,18 @@ body {
 
 /**--------------------
 *
-* ...
+* The output-summary part
 *
 *--------------------*/
+
+.summary {
+  margin-top: 24px;
+  list-style: none;
+}
+.bucket-title {
+  font-size: 18px;
+}
+.blurb {
+  list-style-type: disc;
+}
 

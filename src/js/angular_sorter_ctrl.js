@@ -10,19 +10,19 @@
 (function( ns ){
 //---
 
-/** @type {UserInputCtrl} */
+/** @type {AngularSorterCtrl} */
 var _instance = null;    // TODO Use a service instead of this faux singleton.
 
 /** @constructor */
-function UserInputCtrl( p )
+function AngularSorterCtrl( p )
 {
   _instance = this;
   this.app = p.app;
   this.$scope = p.$scope;
   init( this );
 }
-var fn = UserInputCtrl.prototype;
-ns.UserInputCtrl = UserInputCtrl;
+var fn = AngularSorterCtrl.prototype;
+ns.AngularSorterCtrl = AngularSorterCtrl;
 
 //
 // public
@@ -57,7 +57,7 @@ fn.set_user_input = function( s ) {
 * Kickstart t3h controller.
 *
 * @private
-* @param {UserInputCtrl} ctrl
+* @param {AngularSorterCtrl} ctrl
 * @return {void}
 */
 function init( ctrl ) {
@@ -145,12 +145,10 @@ function summarize( ctrl, items ) {
   // Sort the buckets, and do calculations, etc. (reduce).
   //
 
-  var summarized_buckets = {}
-    , count   = 5
-    ;
-  _.each( bin, function( bin_items, sortby ) {
+  var count = 5;
+  return reverse_sort( _.collect( bin, function( bin_items, sortby ) {
         var sorted_items = reverse_sort( bin_items, value_property );
-        var bucket = summarized_buckets[ sortby ] = {};
+        var bucket = {};
         bucket.blurb = [];
         for ( var i = 0; i < count; i++ ) {
           var it = sorted_items[ i ];
@@ -169,8 +167,8 @@ function summarize( ctrl, items ) {
               return sum;
             })
             .value().toFixed( 2 );
-      });
-  return reverse_sort( summarized_buckets, 'sum' );
+        return bucket;
+      }) );
 }
 
 /**

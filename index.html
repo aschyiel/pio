@@ -30,7 +30,7 @@
   <!-- src -->
   <link href="src/css/index.css" rel="stylesheet">
   <script src="src/js/default_data.js"></script>
-  <script src="src/js/user_input_ctrl.js"></script>
+  <script src="src/js/angular_sorter_ctrl.js"></script>
   <script src="src/js/index.js"></script><!-- ..main, goes last.. -->
 
 </head>
@@ -41,7 +41,7 @@
 
   <hr>
 
-  <div ng-controller="UserInputCtrl">
+  <div ng-controller="AngularSorterCtrl">
 
     <!--
     * A mechanism for providing user-error feedback
@@ -57,7 +57,7 @@
       ng-blur ="onInputBlur()"
       ></textarea>
 
-    <button id="sort_button" type="button" class="btn btn-primary"
+    <button id="sort" type="button" class="btn btn-primary"
       ng-click="sort()"
       >Sort!</button>
 
@@ -67,11 +67,9 @@
 
     <ol class="summary" >
       <li ng-repeat="bin in summary">
-        <span class="bucket-label" >{{ bin.label }}:</span>
-        <span class="bucket-count" >({{ bin.count }} items,</span>
-        <span class="bucket-total" >{{ bin.sum }} total)</span>
+        <span class="bucket-title">{{ bin.label }}: {{ bin.count }} items, {{ bin.sum }} total</span>
         <ul class="sample">
-          <li ng-repeat="it in bin.blurb" >{{ it }}</li>
+          <li class="blurb" ng-repeat="it in bin.blurb" >{{ it }}</li>
         </ul>
       </li>
     </ol>

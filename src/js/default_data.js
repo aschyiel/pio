@@ -19,6 +19,16 @@ ns.data.valid_small = JSON.stringify([
         "type": "type1"
       },
       {
+        "line_item": "item1.2",
+        "revenue": 1,
+        "type": "type1"
+      },
+      {
+        "line_item": "item1.3",
+        "revenue": 1,
+        "type": "type1"
+      },
+      {
         "line_item": "item2",
         "revenue": 2,
         "type": "type2"
@@ -26,7 +36,37 @@ ns.data.valid_small = JSON.stringify([
       {
         "line_item": "item3",
         "revenue": 3,
-        "type": "type1"
+        "type": "type3"
+      },
+      {
+        "line_item": "item4",
+        "revenue": 4,
+        "type": "type4"
+      },
+      {
+        "line_item": "item5",
+        "revenue": 5,
+        "type": "type5"
+      },
+      {
+        "line_item": "item5.2",
+        "revenue": 5,
+        "type": "type5"
+      },
+      {
+        "line_item": "item5.3",
+        "revenue": 5,
+        "type": "type5"
+      },
+      {
+        "line_item": "item5.4",
+        "revenue": 5,
+        "type": "type5"
+      },
+      {
+        "line_item": "item5.5",
+        "revenue": 5,
+        "type": "type5"
       }
     ]);
 ns.data.valid_large = JSON.stringify([
@@ -1487,7 +1527,7 @@ ns.data.valid_large = JSON.stringify([
 ns.use_test_data = function( name ) {
   var s = ns.data[ name ];
   s = s || ns.data.valid_large;
-  ns.UserInputCtrl.prototype.set_user_input( s );
+  ns.AngularSorterCtrl.prototype.set_user_input( s );
 };
 
 
