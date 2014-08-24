@@ -110,8 +110,21 @@ function sort( ctrl ) {
   return summarize( ctrl, data );
 }
 
+/**
+* The map-reduce part.
+* @return {Object[]} Where each type is represented bucket;
+*             Each bucket contains the following keys:
+*             - label {String} ------------ The bucket's type label.
+*             - blurb {Object[]}----------- Sample line-items within a bucket.
+*             - count {Number} ---------- The number of items within a bucket.
+*             - sum {Number} --- The total value of the items within a bucket.
+*/
 function summarize( ctrl, items ) {
   var sortables        = {}
+
+      // TODO: Abstract this so that it'll work with arbitrary data.
+      //   For example, as a drop-down of property names
+      //   we could detect at the last-second.
     , name_property    = 'line_item'
     , sortby_property  = 'type'
     , value_property   = 'revenue'
@@ -132,19 +145,22 @@ function summarize( ctrl, items ) {
   // Sort the buckets, and do calculations, etc. (reduce).
   //
 
-  var summary = {}
+  var summarized_buckets = {}
     , count   = 5
     ;
   _.each( bin, function( bin_items, sortby ) {
-        var sorted_items = _.sortBy( bin_items, sortby );
-        var xi = summary[ sortby ] = {};
-        var li = xi.blurb = [];
+        var sorted_items = reverse_sort( bin_items, value_property );
+        var bucket = summarized_buckets[ sortby ] = {};
+        bucket.blurb = [];
         for ( var i = 0; i < count; i++ ) {
           var it = sorted_items[ i ];
-          it && li.push( as_blurb( it, name_property, value_property ) );
+          it && bucket.blurb.push( as_blurb( it, name_property, value_property ) );
         }
-        xi.count = sorted_items.length;
-        xi.sum = _.chain( sorted_items )
+        bucket.count = sorted_items.length;
+        bucket.label = sortby;
+
+        // TODO: Standard Deviation, Median, Max, Min, etc.
+        bucket.sum = _.chain( sorted_items )
             .collect( function( it ) {
               return it[ value_property ] || 0;
             })
@@ -152,16 +168,31 @@ function summarize( ctrl, items ) {
               sum += n;
               return sum;
             })
-            .value();
+            .value().toFixed( 2 );
       });
-  console.debug( 'summary:', summary );
-  return summary;
+  return reverse_sort( summarized_buckets, 'sum' );
+}
+
+/**
+* Sort-by so that bigger numbers go first, etc.
+*
+* @static
+* @param {Object[]} li
+* @param {String} sortby
+* @return {Object[]}
+*/
+function reverse_sort( li, sortby ) {
+  return _.chain( li )
+      .sortBy( sortby )
+      .reverse()
+      .value();
 }
 
 /**
 * Simplifies the representation of a line-item.
 *
 * @private
+* @static
 * @param {*} it The thing.
 * @param {String} name_property The label part.
 * @param {String} value_property The number part.
