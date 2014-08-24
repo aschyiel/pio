@@ -1,7 +1,7 @@
 //..user_input_ctrl.js, uly, aug2014..
 
-/*jshint undef:true, laxcomma:true, jquery:true */
-/*global window, angular, document, console, setTimeout */
+/*jshint undef:true, laxcomma:true, jquery:true, expr:true */
+/*global window, angular, document, console, setTimeout, _ */
 
 /**
 * The user-input controller module;
@@ -70,7 +70,7 @@ function init( ctrl ) {
       };
 
   $scope.sort = function() {
-        sort( ctrl );
+        $scope.summary = sort( ctrl );
       };
 }
 
@@ -81,7 +81,6 @@ function sort( ctrl ) {
   var $scope = ctrl.$scope
     , data = null
     ;
-  console.log( '..sort..' );
 
   $scope.flash = '';
 
@@ -98,16 +97,78 @@ function sort( ctrl ) {
     }
   }
 
-  if ( $scope.flash ) {
-    console.error( $scope.flash );
-    return;
+  if ( data && !_.isArray( data ) ) {
+    $scope.flash( 'Invalid Argument - The JSON needs to represent '+
+                  'an array of items.' );
   }
 
-  _sort( ctrl, data );
+  if ( $scope.flash ) {
+    console.error( $scope.flash );
+    return {};
+  }
+
+  return summarize( ctrl, data );
 }
 
-function _sort( ctrl, data ) {
-  console.log( '_sort:', ctrl, data );
+function summarize( ctrl, items ) {
+  var sortables        = {}
+    , name_property    = 'line_item'
+    , sortby_property  = 'type'
+    , value_property   = 'revenue'
+    , bin = {}
+    ;
+
+  //
+  // Iterate through the items, and divide them into buckets (map).
+  //
+
+  _.each( items, function( it ) {
+        var sortby = it[ sortby_property ];
+        bin[ sortby ] = bin[ sortby ] || [];
+        bin[ sortby ].push( it );
+      });
+
+  //
+  // Sort the buckets, and do calculations, etc. (reduce).
+  //
+
+  var summary = {}
+    , count   = 5
+    ;
+  _.each( bin, function( bin_items, sortby ) {
+        var sorted_items = _.sortBy( bin_items, sortby );
+        var xi = summary[ sortby ] = {};
+        var li = xi.blurb = [];
+        for ( var i = 0; i < count; i++ ) {
+          var it = sorted_items[ i ];
+          it && li.push( as_blurb( it, name_property, value_property ) );
+        }
+        xi.count = sorted_items.length;
+        xi.sum = _.chain( sorted_items )
+            .collect( function( it ) {
+              return it[ value_property ] || 0;
+            })
+            .reduce( function( sum, n ) {
+              sum += n;
+              return sum;
+            })
+            .value();
+      });
+  console.debug( 'summary:', summary );
+  return summary;
+}
+
+/**
+* Simplifies the representation of a line-item.
+*
+* @private
+* @param {*} it The thing.
+* @param {String} name_property The label part.
+* @param {String} value_property The number part.
+* @return {String}
+*/
+function as_blurb( it, name_property, value_property ) {
+  return it[ name_property ] +' | '+ it[ value_property ];
 }
 
 
