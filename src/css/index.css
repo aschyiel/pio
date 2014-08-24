@@ -9,6 +9,10 @@
    clear: both;
 }
 
+body {
+  margin-left: 12px;
+}
+
 /**--------------------
 *
 * The user-input part.
@@ -33,7 +37,9 @@
 #flash {
   display: block;
   color: red;
-  min-height: 20px
+  min-height: 20px;
+  margin-top: -16px;
+  margin-bottom: 4px;
 }
 
 /**--------------------
