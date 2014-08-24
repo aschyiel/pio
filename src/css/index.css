@@ -1,0 +1,8 @@
+
+/** By default, the text-area representing the user-input is "collapsed". */
+#input {
+  height: 25px;
+}
+#input.expanded {
+  height: 500px;
+}
