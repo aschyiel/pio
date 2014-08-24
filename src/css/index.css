@@ -1,8 +1,44 @@
 
+
+/** see http://css-tricks.com/all-about-floats/ */
+.clearfix:after { 
+   content: ".";
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+
+/**--------------------
+*
+* The user-input part.
+*
+*--------------------*/
+
 /** By default, the text-area representing the user-input is "collapsed". */
 #input {
-  height: 50px;
+  float: right;
+  width: 80%;
+  height: 35px;
 }
 #input.expanded {
   height: 500px;
 }
+#sort_button, #input {
+  float: left;
+}
+#sort_button {
+  margin-left: 10px;
+}
+#flash {
+  display: block;
+  color: red;
+  min-height: 20px
+}
+
+/**--------------------
+*
+* ...
+*
+*--------------------*/
+

@@ -1487,7 +1487,7 @@ ns.data.valid_large = JSON.stringify([
 ns.use_test_data = function( name ) {
   var s = ns.data[ name ];
   s = s || ns.data.valid_large;
-  $( '#input' ).text( s );
+  ns.UserInputCtrl.prototype.set_user_input( s );
 };
 
 

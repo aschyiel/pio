@@ -21,10 +21,16 @@
   <script src="lib/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
   <script src="lib/ui-bootstrap-tpls-0.11.0.min.js"></script>
 
+
+  <script>
+    window.aschyiel = window.aschyiel || {};    // Provide a namespace.
+  </script>
+
   <!-- src -->
   <link href="src/css/index.css" rel="stylesheet">
   <script src="src/js/default_data.js"></script>
-  <script src="src/js/index.js"></script>
+  <script src="src/js/user_input_ctrl.js"></script>
+  <script src="src/js/index.js"></script><!-- ..main, goes last.. -->
 
 </head>
 
@@ -32,23 +38,32 @@
 
   <h1>Angular Sorter</h1>
 
-  <!--
-  * A mechanism for providing user-error feedback
-  * (ie. RoR flash messaging).
-  *-->
-  <div id="flash" ></div>
+  <div class="user-input-container" ng-controller="UserInputCtrl" >
 
-  <button id="sort_button" type="button" class="btn btn-primary"
-    ng-click="sort()"
-    >Sort!</button>
+    <!--
+    * A mechanism for providing user-error feedback
+    * (ie. RoR flash messaging).
+    *-->
+    <span id="flash">{{ flash }}</span>
 
-  <!-- TODO: Is there a reusable library for this? -->
-  <textarea id="input" ng-model="input"
-    required
-    placeholder="paste in your data..."
-    ng-focus="$( '#input' ).toggleClass( 'expanded' )"
-    ng-blur ="$( '#input' ).toggleCLass( 'expanded' )"
-    ></textarea><!-- GOTCHA: Simplicity vs. inefficient jQuery usage. -->
+    <!-- TODO: Is there a reusable library for this? -->
+    <textarea id="input" ng-model="input"
+      required
+      placeholder="paste in your data..."
+      ng-focus="onInputFocus()"
+      ng-blur ="onInputBlur()"
+      ></textarea>
+
+    <button id="sort_button" type="button" class="btn btn-primary"
+      ng-click="sort()"
+      >Sort!</button>
+
+    <div class="clearfix"></div>
+
+  </div>
+
+  <div class="summary-container" >
+  </div>
 
 </body>
 

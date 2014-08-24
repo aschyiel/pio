@@ -1,7 +1,7 @@
 //..src/js/index.js, uly, aug2014..
 
 /*jshint undef:true */
-/*global window */
+/*global window, document */
 
 /**
 * This is the "main" function for the "Angular-Sorter".
@@ -13,8 +13,13 @@ window.aschyiel = window.aschyiel || {};
 //---
 
 function main() {
-  console.log( "..main.." );
-  
+  var mod = 'AschyielAngularSorter';
+  var app = ns.app = angular.module( mod, [ 'ui.bootstrap' ] );
+  app.controller( 'UserInputCtrl', [ '$scope', function( $scope ) {
+        new ns.UserInputCtrl({ '$scope': $scope, 'app': app });
+      }]);
+  angular.bootstrap( document, [ mod ] );
+
 }
 $( _.once( main ) );
 
