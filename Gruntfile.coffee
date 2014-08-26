@@ -1,4 +1,3 @@
-# see https://github.com/benatkin/grunt-coffee-example/blob/master/Gruntfile.coffee
 module.exports = (grunt) ->
 
   grunt.initConfig
@@ -10,13 +9,23 @@ module.exports = (grunt) ->
         src: ['**/*.coffee']
         dest: 'build'
         ext: '.js'
+    concat:
+      default:
+        src: [
+          'build/namespace.js'
+          'src/js/angular_sorter_ctrl.js'
+          'src/js/default_data.js'
+          'build/index.js'
+        ]
+        dest: 'build/app.js'
     watch:
       app:
         files: '**/*.cofee'
-        tasks: ['coffee']
+        tasks: ['default']
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-contrib-concat'
   grunt.loadNpmTasks 'grunt-contrib-watch'
 
-  grunt.registerTask 'default', ['coffee']
+  grunt.registerTask 'default', ['coffee', 'concat']
 

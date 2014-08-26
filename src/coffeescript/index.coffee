@@ -1,6 +1,3 @@
-# The namespace we're going to be using.
-window.aschyiel or= {}
-
 ((ns) ->
   main = ->
     moduleName = 'AschyielAngularSorter'
