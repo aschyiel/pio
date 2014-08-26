@@ -14,7 +14,7 @@ module.exports = (grunt) ->
         src: [
           'build/namespace.js'
           'src/js/angular_sorter_ctrl.js'
-          'src/js/default_data.js'
+          'build/default_data.js'
           'build/index.js'
         ]
         dest: 'build/app.js'
