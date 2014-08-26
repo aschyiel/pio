@@ -3,8 +3,9 @@ module.exports = (grunt) ->
 
   grunt.initConfig
     coffee:
-      app:
+      default:
         expand: true
+        flatten: true
         cwd: 'src'
         src: ['**/*.coffee']
         dest: 'build'
