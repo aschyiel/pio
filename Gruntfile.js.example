@@ -1,0 +1,127 @@
+"use strict";
+module.exports = function(grunt) {
+  grunt.initConfig({
+    uglify: {
+      options: {
+        mangle: false,
+        beautify: false
+      },
+      build: {
+        files: [
+          {
+            "assets/javascript/vendor.js": ["src/vendor/javascript/jquery.js", "src/vendor/javascript/angular.js", "src/vendor/javascript/modules/*.js", "src/vendor/compiled/*.js"]
+          }
+        ]
+      }
+    },
+    sass: {
+      custom: {
+        options: {
+          style: "expanded"
+        },
+        files: [
+          {
+            "assets/stylesheets/main.css": ["src/sass/*.sass"]
+          }
+        ]
+      },
+      vendor: {
+        options: {
+          style: "compressed"
+        },
+        files: [
+          {
+            "assets/stylesheets/vendor.css": ["src/vendor/stylesheets/*.sass"]
+          }
+        ]
+      }
+    },
+    jade: {
+      compile: {
+        options: {
+          client: false,
+          pretty: true
+        },
+        files: [
+          {
+            expand: true,
+            cwd: "src/jade",
+            src: ["*.jade"],
+            dest: "",
+            ext: ".html"
+          }, {
+            expand: true,
+            cwd: "src/jade/templates",
+            src: ["*.jade"],
+            dest: "templates",
+            ext: ".html"
+          }
+        ]
+      }
+    },
+    coffee: {
+      config: {
+        options: {
+          bare: true
+        },
+        files: [
+          {
+            "Gruntfile.js": "config/Gruntfile.coffee"
+          }
+        ]
+      },
+      compile: {
+        options: {
+          bare: false,
+          join: true
+        },
+        files: [
+          {
+            'assets/javascript/main.js': ['src/coffeescript/*.coffee', 'src/coffeescript/app/*.coffee']
+          }
+        ]
+      },
+      vendor: {
+        options: {
+          bare: true
+        },
+        files: [
+          {
+            expand: true,
+            cwd: "src/vendor/javascript/coffee",
+            src: ["*.coffee"],
+            dest: "src/vendor/javascript/compiled",
+            ext: ".js"
+          }
+        ]
+      }
+    },
+    watch: {
+      scripts: {
+        options: {
+          livereload: true
+        },
+        files: ["src/**/*.coffee", "src/**/*.sass", "src/**/*.jade"],
+        tasks: ["compile"]
+      }
+    },
+    connect: {
+      server: {
+        options: {
+          livereload: true
+        }
+      }
+    }
+  });
+  grunt.loadNpmTasks("grunt-contrib-concat");
+  grunt.loadNpmTasks("grunt-contrib-sass");
+  grunt.loadNpmTasks("grunt-contrib-jade");
+  grunt.loadNpmTasks("grunt-contrib-coffee");
+  grunt.loadNpmTasks("grunt-contrib-uglify");
+  grunt.loadNpmTasks("grunt-contrib-watch");
+  grunt.loadNpmTasks("grunt-contrib-connect");
+  grunt.registerTask("config", ["coffee:config"]);
+  grunt.registerTask("compile-vendor", ["sass:vendor", "coffee:vendor", "uglify"]);
+  grunt.registerTask("compile", ["sass:custom", "jade", "coffee:compile"]);
+  grunt.registerTask("default", ["compile", "connect:server", "watch"]);
+};
